@@ -8,8 +8,8 @@ It supports consistent loading and a unified view of the common sources of such 
 - resources folder
 - file
 
-It is restricted to one source of each type but provides a variety of options which provides a 
-high degree of flexibility.
+A variety of runtime arguments provide a high degree of flexibility and accessor functions
+for each source of configuration data through a single namespace.
 
 Additionally the `missinterpret.mount-configuration.file` namespace has primitive editing 
 functions with file save capabilities and the `missinterpret.mount-configuration.env` namespace 
