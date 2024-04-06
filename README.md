@@ -85,11 +85,14 @@ keys under the `:mount-configuration.resource` namespace:
 #### missinterpret.mount-configuration.file
 
 A file on the file system as a source of configuration data.  It does not, by default
-attempt to load a file but will load one by using the `path` runtime argument.
+attempt to load a file but will load one by using the `path` runtime argument. 
+
+If any of the editing functions are they will be saved on `stop` by default.
 
 ### Runtime arguments
 
-It provides the following edit operations as keys under the `:mount-configuration.file` namespace:
+The namespace's start function takes the following `mount/start` runtime variables as
+keys under the `:mount-configuration.file` namespace:
 
 - `path` - the file path 
 - `throw-if-missing` - throw an exception if the file cant be loaded or parsed to edn
