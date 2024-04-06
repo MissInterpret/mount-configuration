@@ -29,13 +29,15 @@ supports safe auto-edn parsing.
 ## missinterpret.mount-configuration.core
 
 The [missinterpret.mount-configuration.core](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/core.clj#L1) namespace provides a unified view of 
-all those sources in a consistent way by merging in the data in loading order.
+all those sources in a consistent and accessor functions to access that view and each source's runtime data independently 
+via a single interface.
 
 ### Unified View and Loading Order
 
 The unified data view provides consistency between runtimes by imposing a loading order 
-on the sources. 
+on the sources and merging loaded data in that order to create the unified view. 
 
+Order:
 ```
 edn -> resource -> file
 ```
