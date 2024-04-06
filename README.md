@@ -29,8 +29,8 @@ supports safe auto-edn parsing.
 ## missinterpret.mount-configuration.core
 
 The [missinterpret.mount-configuration.core](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/core.clj#L1) namespace provides a unified view of 
-all those sources in a consistent and accessor functions to access that view and each source's runtime data independently 
-via a single interface.
+all those sources in a unified view and accessor functions to access that view as well as 
+each source's runtime data independently via a single interface.
 
 ### Unified View and Loading Order
 
