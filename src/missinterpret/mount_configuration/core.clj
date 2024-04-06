@@ -72,3 +72,5 @@
     (merge config (:edit @config.file/edit-atom))
     config))
 
+io.github.missinterpret/anomalies {:mvn/version "0.1.0"}
+mount/mount                       {:mvn/version "0.1.18"}

@@ -15,6 +15,17 @@ Additionally the `missinterpret.mount-configuration.file` namespace has primitiv
 functions with file save capabilities and the `missinterpret.mount-configuration.env` namespace 
 supports safe auto-edn parsing.
 
+## Using missinterpret.mount-configuration 
+
+[Leiningen](https://github.com/technomancy/leiningen) dependency information:
+
+    [io.github.missinterpret/mount-configuration "0.1.0"]
+
+[Deps](https://clojure.org/guides/deps_and_cli) dependency information:
+
+    io.github.missinterpret/mount-configuration {:mvn/version "0.1.0"}
+
+
 ## missinterpret.mount-configuration.core
 
 The [missinterpret.mount-configuration.core](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/core.clj#L1) namespace provides a unified view of 
@@ -83,5 +94,16 @@ It provides the following edit operations as keys under the `:mount-configuratio
 - `throw-if-missing` - throw an exception if the file cant be loaded or parsed to edn
 - `dont-bootstrap` - Skip bootstrapping and only use `mount/config` to load
 - `dont-save-on-stop` - If editing has happened, don't save on stop
+
+
+# Developer Information
+
+Lackadaisically maintained, please submit feedback via GitHub
+[issues](https://github.com/MissInterpret/mount-configuration/issues).
+
+# Copyright and License
+
+[Creative Commons BY 4.0 Deed](https://creativecommons.org/licenses/by/4.0/)
+
 
 
