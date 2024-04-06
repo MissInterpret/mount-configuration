@@ -29,8 +29,8 @@ supports safe auto-edn parsing.
 ## missinterpret.mount-configuration.core
 
 The [missinterpret.mount-configuration.core](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/core.clj#L1) namespace provides a unified view of 
-all those sources that is consistent across runtimes and accessor functions to access that view as well as 
-each source's runtime data independently via a single interface.
+all those sources that is consistent across runtimes. Accessor functions to access that view as well as 
+each source's runtime data independently via a single interface is also provided.
 
 ### Unified View and Loading Order
 
@@ -44,7 +44,7 @@ edn -> resource -> file
 
 ### Bootstrapping 
 
-The [start](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/core.clj#L39) namespace will attempt to bootstrap off of the loaded data if 
+The [start](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/core.clj#L39) functions will attempt to bootstrap off of the loaded data if 
 no runtime argument is provided.
 
 - The [resource](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/resource.clj#L1) 
