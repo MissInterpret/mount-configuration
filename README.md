@@ -35,7 +35,7 @@ The [start](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05d
 by having each source in the chain using the updated context. 
 
 - The [resource](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/resource.clj#L1) 
-namespace checks the [environcment variabbles](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/env.clj#L1) as a source 
+namespace checks the [environcment variables](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/env.clj#L1) as a source 
 for its data.  
 - The [file](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/file.clj#L1) namespace first checks the env and then the resource namespace 
 
@@ -66,6 +66,21 @@ Throw an exception if the edn parsing fails.
 
 
 ## missinterpret.mount-configuration.resource
+
+A file in the resources directory as the source of configuration data. It does not, by default
+attempt to load a resource but will load one by using the `path` runtime argument. 
+
+### Runtime arguments
+
+The namespace's start function takes the following `mount/start` runtime variables:
+
+### :mount-configuration.resource/path
+
+The path in the resources directory. 
+
+### :mount-configuration.resource/throw-if-missing
+
+Throw an exception if there is no `path` argument is passed at runtime. 
 
 
 ## missinterpret.mount-configuration.file
