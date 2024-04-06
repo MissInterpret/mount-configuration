@@ -70,8 +70,8 @@ keys under the `:mount-configuration.env` namespace:
 
 ## missinterpret.mount-configuration.resource
 
-A file in the resources folder as the source of configuration data. It does not, by default
-attempt to load a resource but will load one by using the `path` runtime argument.
+A file in the resources folder as the source of configuration data. It does not by default
+attempt to load a resource. 
 
 ### Runtime arguments
 
@@ -84,10 +84,9 @@ keys under the `:mount-configuration.resource` namespace:
 
 #### missinterpret.mount-configuration.file
 
-A file on the file system as a source of configuration data.  It does not, by default
-attempt to load a file but will load one by using the `path` runtime argument. 
-
-If any of the editing functions are they will be saved on `stop` by default.
+A file on the file system as a source of configuration data.  It does not by default
+attempt to load a file. If any of the editing functions are used changes will be saved 
+on `stop` by default.
 
 ### Runtime arguments
 
