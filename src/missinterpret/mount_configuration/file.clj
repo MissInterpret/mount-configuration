@@ -10,8 +10,10 @@
 ;; Mount ----------------------------------------------------------
 ;;
 
-(def edit-atom (atom {:changed false
-                      :edit {}}))
+(def default {:changed false
+              :edit {}})
+
+(def edit-atom (atom default))
 
 
 (defn read-configuration [path]
@@ -40,9 +42,10 @@
       (nil? file-path) {}
       :else
       (try
-        (swap! edit-atom assoc :path path)
-        (swap! edit-atom assoc :dont-save dont-save-on-stop)
-        (read-configuration file-path)
+        (let [data (read-configuration file-path)]
+          (swap! edit-atom assoc :path path)
+          (swap! edit-atom assoc :dont-save dont-save-on-stop)
+          data)
 
         (catch java.lang.Exception _ (anom/throw+ :parse-exception anomaly))))))
 

@@ -5,6 +5,7 @@
 
    Note: values from env variables are parsed as edn"
   (:require [clojure.edn :as edn]
+            [clojure.pprint :refer [pprint]]
             [mount.core :refer [defstate] :as mount]
             [missinterpret.anomalies.anomaly :as anom])
   (:import (clojure.lang Symbol)))
@@ -12,7 +13,7 @@
 ;; Mount ----------------------------------------------------------
 ;;
 
-(defn start [{:mount-configuration.env/keys [vars skip-missing throw-parse-failed]}]
+(defn start [{:mount-configuration.env/keys [vars skip-missing throw-parse-failed] :as args}]
   (reduce
     (fn [coll k]
       (let [value (-> (name k) System/getenv)

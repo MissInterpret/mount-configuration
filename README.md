@@ -92,7 +92,7 @@ It provides the following edit operations as keys under the `:mount-configuratio
 
 - `path` - the file path 
 - `throw-if-missing` - throw an exception if the file cant be loaded or parsed to edn
-- `dont-bootstrap` - Skip bootstrapping and only use `mount/config` to load
+- `dont-bootstrap` - Skip bootstrapping and only use `mount/args` to load
 - `dont-save-on-stop` - If editing has happened, don't save on stop
 
 

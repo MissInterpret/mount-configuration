@@ -4,10 +4,6 @@
             [aux.fixtures :as aux.fix]
             [missinterpret.mount-configuration.env :refer [env-config]]))
 
-(def path "/tmp/simple-config.edn")
-
-(use-fixtures :once (aux.fix/cp-config aux.fix/config.simple path))
-
 (deftest start
   (testing "Success; load of string value/not edn value (PATH)"
     (mount/start-with-args {:mount-configuration.env/vars #{:PATH}})

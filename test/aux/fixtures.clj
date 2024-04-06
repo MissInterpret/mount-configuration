@@ -8,9 +8,10 @@
   (-> (cwd-path)
       (io/file "test/resources")))
 
-(def config.default "configuration.edn")
-(def config.simple "simple-config.edn")
-(def config.store "store-config.edn")
+(def config.rsrc "resource-config.edn")
+(def config.file "file-config.edn")
+(def config.edit "edit-config.edn")
+
 
 ;; Fns ------------------------------------------------------
 ;;

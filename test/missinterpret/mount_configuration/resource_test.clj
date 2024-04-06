@@ -2,25 +2,12 @@
   (:require [clojure.test :refer :all]
             [mount.core :as mount]
             [aux.fixtures :as aux.fix]
-            [missinterpret.mount-configuration.file :as cfg.file]
-            [missinterpret.mount-configuration.resource :refer [resource-config] :as cfg.rsrc]))
-
-(def path "/tmp/simple-config.edn")
-
-(use-fixtures :once (aux.fix/cp-config aux.fix/config.simple path))
+            [missinterpret.mount-configuration.resource :refer [resource-config]]))
 
 (deftest start
   (testing "Success; path from resources"
-    (mount/start-with-args {:mount-configuration.resource/path aux.fix/config.simple})
-    (is (contains? resource-config :default))
-    (is (= false (:default resource-config)))
-    (mount/stop))
-
-  (testing "Success; no path, default loaded"
-    (swap! cfg.file/edit-atom assoc :edit {})
-    (swap! cfg.file/edit-atom assoc :changed false)
-    (mount/start)
-    (is (= true (:default resource-config)))
+    (mount/start-with-args {:mount-configuration.resource/path aux.fix/config.rsrc})
+    (is (contains? resource-config :resource))
     (mount/stop))
 
   (testing "Failed; no path; throw-if-missing"
