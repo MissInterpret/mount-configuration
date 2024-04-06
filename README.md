@@ -84,7 +84,8 @@ keys under the `:mount-configuration.resource` namespace:
 
 #### missinterpret.mount-configuration.file
 
-A file on the file system as a source of configuration data. 
+A file on the file system as a source of configuration data.  It does not, by default
+attempt to load a file but will load one by using the `path` runtime argument.
 
 ### Runtime arguments
 
