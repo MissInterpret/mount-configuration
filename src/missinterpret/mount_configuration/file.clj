@@ -20,7 +20,7 @@
       edn/read-string))
 
 
-(defn start [{:mount-configuration.file/keys [path throw-if-missing omit-resources dont-save-on-stop]}]
+(defn start [{:mount-configuration.file/keys [path throw-if-missing dont-bootstrap dont-save-on-stop]}]
   (let [anomaly {:from     ::start
                  :category :anomaly.category/fault
                  :message  {:readable (str path " missing or failed to load")
