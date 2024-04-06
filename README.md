@@ -29,7 +29,7 @@ supports safe auto-edn parsing.
 ## missinterpret.mount-configuration.core
 
 The [missinterpret.mount-configuration.core](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/core.clj#L1) namespace provides a unified view of 
-all those sources in a consistent way,
+all those sources in a consistent way by merging in the data in loading order.
 
 ### Unified View and Loading Order
 
