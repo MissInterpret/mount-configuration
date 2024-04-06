@@ -53,9 +53,9 @@ Variables are parsed into edn if possible. If they can't be parsed they are conv
 The namespace's start function takes the following `mount/start` runtime variables as
 keys under the `:mount-configuration.env` namespace:
 
-`vars` - A set of the names of the variables as a keyword: `#{:PATH}`
-`skip-missing` - Skip any variables in the set which aren't available at runtime instead of throwing an exception.
-`throw-parse-failed` -Throw an exception if the edn parsing fails.
+- `vars` - A set of the names of the variables as a keyword: `#{:PATH}`
+- `skip-missing` - Skip any variables in the set which aren't available at runtime instead of throwing an exception.
+- `throw-parse-failed` -Throw an exception if the edn parsing fails.
 
 ## missinterpret.mount-configuration.resource
 
@@ -67,8 +67,8 @@ attempt to load a resource but will load one by using the `path` runtime argumen
 The namespace's start function takes the following `mount/start` runtime variables as
 keys under the `:mount-configuration.resource` namespace:
 
-`path` - The path in the resources folder
-`throw-if-missing` - Throw an exception if there is no `path` argument at runtime. 
+- `path` - The path in the resources folder
+- `throw-if-missing` - Throw an exception if there is no `path` argument at runtime. 
 
 
 #### missinterpret.mount-configuration.file
@@ -79,9 +79,9 @@ A file on the file system as a source of configuration data.
 
 It provides the following edit operations as keys under the `:mount-configuration.file` namespace:
 
-`path` - the file path 
-`throw-if-missing` - throw an exception if the file cant be loaded or parsed to edn
-`dont-bootstrap` - Skip bootstrapping and only use `mount/config` to load
-`dont-save-on-stop` - If editing has happened, don't save on stop
+- `path` - the file path 
+- `throw-if-missing` - throw an exception if the file cant be loaded or parsed to edn
+- `dont-bootstrap` - Skip bootstrapping and only use `mount/config` to load
+- `dont-save-on-stop` - If editing has happened, don't save on stop
 
 
