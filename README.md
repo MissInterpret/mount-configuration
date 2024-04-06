@@ -19,11 +19,11 @@ supports safe auto-edn parsing.
 
 [Leiningen](https://github.com/technomancy/leiningen) dependency information:
 
-    [io.github.missinterpret/mount-configuration "0.1.0"]
+    [io.github.missinterpret/mount-configuration "0.1.1"]
 
 [Deps](https://clojure.org/guides/deps_and_cli) dependency information:
 
-    io.github.missinterpret/mount-configuration {:mvn/version "0.1.0"}
+    io.github.missinterpret/mount-configuration {:mvn/version "0.1.1"}
 
 
 ## missinterpret.mount-configuration.core
