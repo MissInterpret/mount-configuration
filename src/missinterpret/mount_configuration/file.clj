@@ -1,7 +1,6 @@
 (ns missinterpret.mount-configuration.file
   "Provides data from an edn file. "
-  (:require [clojure.java.io :as io]
-            [clojure.pprint :refer [pprint]]
+  (:require [clojure.pprint :refer [pprint]]
             [clojure.edn :as edn]
             [missinterpret.anomalies.anomaly :as anom]
             [mount.core :refer [defstate] :as mount]
@@ -21,7 +20,7 @@
       edn/read-string))
 
 
-(defn start [{:mount-configuration.file/keys [path throw-if-missing omit-resources]}]
+(defn start [{:mount-configuration.file/keys [path throw-if-missing omit-resources dont-save-on-stop]}]
   (let [anomaly {:from     ::start
                  :category :anomaly.category/fault
                  :message  {:readable (str path " missing or failed to load")
@@ -40,13 +39,15 @@
       (try
         (let [data (read-configuration file-path)]
           (swap! edit-atom assoc :path path)
+          (swap! edit-atom assoc :dont-save dont-save-on-stop)
           (assoc data :mount-configuration.file/path path))
 
         (catch java.lang.Exception _ (anom/throw+ :parse-exception anomaly))))))
 
 
 (defn stop []
-  (when (:changed @edit-atom)
+  (when (and (:changed @edit-atom)
+             (not (:dont-save-on-stop @edit-atom)))
     (let [path (:path @edit-atom)
           data (:edit @edit-atom)]
       (->> data
