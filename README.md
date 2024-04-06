@@ -5,8 +5,8 @@ A flexible and lightweight configuration data management library for the Clojure
 
 It supports consistent loading and a unified view of the common sources of such data:
 - environment variables 
-- resources 
-- a file source
+- resources folder
+- file
 
 It is restricted to one source of each type but provides a variety of options which provides a 
 high degree of flexibility.
@@ -35,7 +35,7 @@ The [start](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05d
 by having each source in the chain using the updated context. 
 
 - The [resource](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/resource.clj#L1) 
-namespace checks the [environcment variables](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/env.clj#L1) as a source 
+namespace checks the [environment variables](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/env.clj#L1) as a source 
 for its data.  
 - The [file](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/file.clj#L1) namespace first checks the env and then the resource namespace 
 
@@ -67,7 +67,7 @@ Throw an exception if the edn parsing fails.
 
 ## missinterpret.mount-configuration.resource
 
-A file in the resources directory as the source of configuration data. It does not, by default
+A file in the resources folder as the source of configuration data. It does not, by default
 attempt to load a resource but will load one by using the `path` runtime argument. 
 
 ### Runtime arguments
