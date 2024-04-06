@@ -31,8 +31,8 @@ edn -> resource -> file
 
 ### Bootstrapping 
 
-The [start](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/core.clj#L39) namespace bootstraps 
-by having each source in the chain using the updated context. 
+The [start](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/core.clj#L39) namespace will attempt to bootstrap off of the loaded data if 
+no runtime argument is provided.
 
 - The [resource](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/resource.clj#L1) 
 namespace checks the [environment variables](https://github.com/MissInterpret/mount-configuration/blob/ddfbf1c05da0b2883bee90a18d4492cfba5c56f1/src/missinterpret/mount_configuration/env.clj#L1) as a source 

@@ -26,21 +26,23 @@
                  :message  {:readable (str path " missing or failed to load")
                             :data     {:path                path
                                        :throw-if-missing   throw-if-missing}}}
-        file-path (cond
-                   (some? path)                                      path
-                   (get env-config :mount-configuration.file/path)   (get env-config :mount-configuration.file/path)
-                   (and (not omit-resources)
-                        (get resource-config :mount-configuration.file/path))
-                   (get resource-config :mount-configuration.file/path))]
+        file-path (if dont-bootstrap
+                    path
+                    (cond
+                      (some? path) path
+                      (get env-config :mount-configuration.file/path)
+                      (get env-config :mount-configuration.file/path)
+
+                      (get resource-config :mount-configuration.file/path)
+                      (get resource-config :mount-configuration.file/path)))]
     (cond
       (and (nil? file-path) throw-if-missing) (anom/throw+ :path-missing anomaly)
       (nil? file-path) {}
       :else
       (try
-        (let [data (read-configuration file-path)]
-          (swap! edit-atom assoc :path path)
-          (swap! edit-atom assoc :dont-save dont-save-on-stop)
-          (assoc data :mount-configuration.file/path path))
+        (swap! edit-atom assoc :path path)
+        (swap! edit-atom assoc :dont-save dont-save-on-stop)
+        (read-configuration file-path)
 
         (catch java.lang.Exception _ (anom/throw+ :parse-exception anomaly))))))
 
