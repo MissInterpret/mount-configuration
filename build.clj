@@ -20,15 +20,15 @@
   opts)
 
 (defn- pom-template [version]
-  [[:description "FIXME: my new library."]
+  [[:description "A flexible and lightweight configuration data management library for the Clojure mount ecosystem."]
    [:url "https://github.com/missinterpret/mount-configuration"]
    [:licenses
     [:license
-     [:name "Eclipse Public License"]
-     [:url "http://www.eclipse.org/legal/epl-v10.html"]]]
+     [:name "Creative Commons"]
+     [:url "https://creativecommons.org/licenses/by/4.0/"]]]
    [:developers
     [:developer
-     [:name "Gateway"]]]
+     [:name "George Kierstein"]]]
    [:scm
     [:url "https://github.com/missinterpret/mount-configuration"]
     [:connection "scm:git:https://github.com/missinterpret/mount-configuration.git"]
