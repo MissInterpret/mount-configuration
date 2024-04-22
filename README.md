@@ -25,6 +25,14 @@ supports safe auto-edn parsing.
 
     io.github.missinterpret/mount-configuration {:mvn/version "0.1.1"}
 
+## Usage 
+
+To use the configuration component in a project add this to the namespace 
+which loads earliest:
+
+```clojure
+[missinterpret.mount-configuration.core :refer [config]]
+```
 
 ## missinterpret.mount-configuration.core
 
