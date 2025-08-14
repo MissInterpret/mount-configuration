@@ -4,14 +4,16 @@
    its environment variable value.
 
    Note: values from env variables are parsed as edn"
-  (:require [clojure.edn :as edn]
-            [clojure.pprint :refer [pprint]]
+  (:require [missinterpret.anomalies.anomaly :as anom]
+            [missinterpret.mount-configuration.edn :as edn]
+            [clojure.java.io :as io]
             [mount.core :refer [defstate] :as mount]
-            [missinterpret.anomalies.anomaly :as anom])
+            [clojure.pprint :refer [pprint]])
   (:import (clojure.lang Symbol)))
 
 ;; Mount ----------------------------------------------------------
 ;;
+
 
 (defn start [{:mount-configuration.env/keys [vars skip-missing throw-parse-failed] :as args}]
   (reduce
@@ -27,18 +29,18 @@
         (try
           (cond
             (and (nil? value) skip-missing)       coll
-            (and (nil? value) (not skip-missing)) (anom/throw+ :not-found anomaly)
+            (and (nil? value) (not skip-missing)) (anom/throw+ anomaly)
 
             :else
             (try
-              (let [parsed (edn/read-string value)
+              (let [parsed (-> io/input-stream edn/read-string)
                     v (if (-> parsed type (= Symbol))
                         (str parsed)
                         parsed)]
                 (assoc coll k v))
 
               (catch java.lang.Exception _ (if throw-parse-failed
-                                            (anom/throw+ :parse-exception anomaly)
+                                            (anom/throw+ anomaly)
                                             (assoc coll k value))))))))
     {}
     vars))
