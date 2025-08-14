@@ -25,11 +25,11 @@
      uri: The file uri
      throw-if-missing: Throw an exception if the file is missing
      omit-resources: Do not use resources to determine the file uri"
-  (:require [mount.core :as mount]
+  (:require [missinterpret.mount-configuration.file :refer [file-config] :as config.file]
             [mount.core :refer [defstate]]
             [missinterpret.mount-configuration.env :refer [env-config]]
-            [missinterpret.mount-configuration.resource :refer [resource-config]]
-            [missinterpret.mount-configuration.file :refer [file-config] :as config.file]))
+            [mount.core :as mount]
+            [missinterpret.mount-configuration.resource :refer [resource-config]]))
 
 ;; Copyright 2024 Creative Commons
 

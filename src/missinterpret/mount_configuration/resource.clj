@@ -1,12 +1,12 @@
 (ns missinterpret.mount-configuration.resource
   "Provides data by loading resource-config.edn from the resources of the runtime context"
-  (:require [clojure.edn :as edn]
-            [clojure.java.io :as io]
-            [clojure.pprint :refer [pprint]]
+  (:require [missinterpret.anomalies.anomaly :as anom]
             [mount.core :refer [defstate]]
-            [missinterpret.anomalies.anomaly :as anom]
+            [missinterpret.mount-configuration.edn :as edn]
+            [missinterpret.mount-configuration.env :refer [env-config]]
+            [clojure.java.io :as io]
             [mount.core :refer [defstate] :as mount]
-            [missinterpret.mount-configuration.env :refer [env-config]]))
+            [clojure.pprint :refer [pprint]]))
 
 ;; Mount ----------------------------------------------------------
 ;;
@@ -20,13 +20,13 @@
         rsrc (when path
                (io/resource path))]
     (cond
-      (and (nil? rsrc) throw-if-missing) (anom/throw+ :resource-missing anomaly)
+      (and (nil? rsrc) throw-if-missing) (anom/throw+ anomaly)
       (nil? rsrc)                        {}
 
       :else
       (try
-        (-> (slurp rsrc) edn/read-string)
-        (catch java.lang.Exception _ (anom/throw+ :parse-exception anomaly))))))
+        (-> (io/input-stream rsrc) edn/read-string)
+        (catch java.lang.Exception _ (anom/throw+ anomaly))))))
 
 
 (defstate resource-config
