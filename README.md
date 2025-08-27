@@ -19,11 +19,11 @@ supports safe auto-edn parsing.
 
 [Leiningen](https://github.com/technomancy/leiningen) dependency information:
 
-    [io.github.missinterpret/mount-configuration "0.1.1"]
+    [io.github.missinterpret/mount-configuration "0.1.3"]
 
 [Deps](https://clojure.org/guides/deps_and_cli) dependency information:
 
-    io.github.missinterpret/mount-configuration {:mvn/version "0.1.1"}
+    io.github.missinterpret/mount-configuration {:mvn/version "0.1.3"}
 
 ## Usage 
 
@@ -95,8 +95,10 @@ keys under the `:mount-configuration.resource` namespace:
 #### missinterpret.mount-configuration.file
 
 A file on the file system as a source of configuration data.  It does not by default
-attempt to load a file. If any of the editing functions are used changes will be saved 
-on `stop` by default.
+attempt to load a file unless a path is provided. 
+
+The namespace provides basic editing operations and an accessor to edited state. 
+If any of the editing functions are used changes will be saved on `stop` by default.
 
 ### Runtime arguments
 

@@ -8,15 +8,28 @@
             [clojure.pprint :refer [pprint]]
             [missinterpret.mount-configuration.resource :refer [resource-config]]))
 
-;; Mount ----------------------------------------------------------
-;;
+;; State -----------------------------------------------------------
 
-;; TODO: Want to be able to have a fn to process the
-;;       file content before saving?
 (def default {:changed false
-              :edit {}})
+              :edit {}
+              :dont-save-on-stop false})
 
 (def edit-atom (atom default))
+
+
+;; FS -------------------------------------------------------------
+
+(defn commit-changes []
+  (when (:changed @edit-atom)
+    (let [path (:path @edit-atom)
+          data (:edit @edit-atom)]
+      (->> data
+           pprint
+           with-out-str
+           (spit path)))))
+
+
+;; Mount ----------------------------------------------------------
 
 (defn start [{:mount-configuration.file/keys [path throw-if-missing dont-bootstrap dont-save-on-stop]}]
   (let [anomaly {:from     ::start
@@ -40,21 +53,17 @@
       (try
         (let [data (-> file-path io/file io/input-stream edn/read-string)]
           (swap! edit-atom assoc :path path)
-          (swap! edit-atom assoc :dont-save dont-save-on-stop)
+          (when (some? dont-save-on-stop)
+            (swap! edit-atom assoc :dont-save-on-stop dont-save-on-stop))
           data)
 
         (catch java.lang.Exception _ (anom/throw+ anomaly))))))
 
 
 (defn stop []
-  (when (and (:changed @edit-atom)
-             (not (:dont-save-on-stop @edit-atom)))
-    (let [path (:path @edit-atom)
-          data (:edit @edit-atom)]
-      (->> data
-           pprint
-           with-out-str
-           (spit path)))))
+  (when (not (true? (:dont-save-on-stop @edit-atom)))
+    (commit-changes)))
+
 
 ;; NOTE: The configuration data loaded at runtime.
 (defstate file-config
@@ -63,7 +72,6 @@
 
 
 ;; Editing Fns ----------------------------------------------------------
-;;
 
 (defn config
   "The view of the configuration data that reflects any edits, otherwise
