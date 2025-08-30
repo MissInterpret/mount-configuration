@@ -45,16 +45,25 @@
                       (get env-config :mount-configuration.file/path)
 
                       (get resource-config :mount-configuration.file/path)
-                      (get resource-config :mount-configuration.file/path)))]
+                      (get resource-config :mount-configuration.file/path)))
+        missing (or (nil? file-path) (-> (io/file file-path) (.exists) not))]
     (cond
-      (and (nil? file-path) throw-if-missing) (anom/throw+ anomaly)
-      (nil? file-path) {}
+      (and missing (true? throw-if-missing))
+      (anom/throw+ anomaly)
+
+      (nil? file-path)
+      {}
+
+      (and (some? file-path) missing)
+      (do
+        (swap! edit-atom assoc :path file-path)
+        {})
+
       :else
       (try
         (let [data (-> file-path io/file io/input-stream edn/read-string)]
-          (swap! edit-atom assoc :path path)
-          (when (some? dont-save-on-stop)
-            (swap! edit-atom assoc :dont-save-on-stop dont-save-on-stop))
+          (swap! edit-atom assoc :path file-path)
+          (swap! edit-atom assoc :dont-save-on-stop dont-save-on-stop)
           data)
 
         (catch java.lang.Exception _ (anom/throw+ anomaly))))))
