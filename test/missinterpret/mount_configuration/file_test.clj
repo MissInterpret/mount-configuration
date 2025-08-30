@@ -1,5 +1,6 @@
 (ns missinterpret.mount-configuration.file-test
   (:require [clojure.edn :as edn]
+            [clojure.java.io :as io]
             [clojure.test :refer :all]
             [mount.core :as mount]
             [aux.fixtures :as aux.fix]
@@ -24,15 +25,29 @@
     (is (map? file-config))
     (mount/stop))
 
+  (testing "Success; path provided, file does not exist. No edit, no write on exit"
+    (reset! cfg/edit-atom cfg/default)
+    (let [f (io/file "/tmp/missing.edn")
+          mount-args {:mount-configuration.file/path (str f)}]
+      (mount/start-with-args mount-args)
+      (is (map? file-config))
+      (mount/stop)
+      (is (not (.exists f)))))
+
+  (testing "Success; path provided, file does not exist. Edited, written on exit"
+    (reset! cfg/edit-atom cfg/default)
+    (let [f (io/file "/tmp/missing.edn")
+          mount-args {:mount-configuration.file/path (str f)}]
+      (mount/start-with-args mount-args)
+      (is (map? (cfg/fassoc :test :TEST)))
+      (mount/stop)
+      (is (.exists f))
+      (= {:test :TEST} (slurp f) edn/read-string)
+      (io/delete-file f)))
+
+
   (testing "Failed; broken uri"
     (reset! cfg/edit-atom cfg/default)
-    (is (thrown? java.lang.Exception (mount/start-with-args {:mount-configuration.file/path "/a/b/c.edn"})))
-    (mount/stop))
-
-  (testing "Failed; no uri, throw-if-missing"
-    (reset! cfg/edit-atom cfg/default)
-    (is (thrown? java.lang.Exception (mount/start-with-args {:mount-configuration.file/throw-if-missing true
-                                                             :mount-configuration.file/omit-resources true})))
+    (is (thrown? java.lang.Exception (mount/start-with-args {:mount-configuration.file/path "/a/b/c.edn"
+                                                             :mount-configuration.file/throw-if-missing true})))
     (mount/stop)))
-
-
