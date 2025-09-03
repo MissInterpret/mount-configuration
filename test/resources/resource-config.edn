@@ -1,3 +1,5 @@
-{:resource true
+{:is-resource true
  :m {}
+ :file #file "/tmp"
+ :uri  #uri "file:///tmp"
  :time #time/instant "2025-08-14T16:11:52.532113Z"}

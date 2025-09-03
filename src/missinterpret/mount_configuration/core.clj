@@ -27,6 +27,7 @@
      omit-resources: Do not use resources to determine the file uri"
   (:require [missinterpret.mount-configuration.file :refer [file-config] :as config.file]
             [mount.core :refer [defstate]]
+            [clojure.pprint :refer [pprint]]
             [missinterpret.mount-configuration.env :refer [env-config]]
             [mount.core :as mount]
             [missinterpret.mount-configuration.resource :refer [resource-config]]))
