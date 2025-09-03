@@ -1,5 +1,6 @@
 (ns missinterpret.mount-configuration.file-edit-test
-  (:require [clojure.edn :as edn]
+  (:require [missinterpret.edn-io.data-readers :as data-readers] ;; Required for tag literals during write
+            [missinterpret.edn-io.edn :as edn]
             [clojure.test :refer :all]
             [mount.core :as mount]
             [aux.fixtures :as aux.fix]
@@ -18,7 +19,7 @@
       (mount/stop)
       (is (-> path
               slurp
-              edn/read-string
+              edn/read
               (get :test)))))
   (testing "Success; fassoc-in - map value is added and successfully saved on stop"
       (let [mount-args {:mount-configuration.file/path path}]
@@ -28,7 +29,7 @@
         (mount/stop)
         (is (-> path
                 slurp
-                edn/read-string
+                edn/read
                 (get-in [:m :test])))))
   (testing "Success; fdissoc - map value is removed and successfully saved on stop"
       (let [mount-args {:mount-configuration.file/path path}]
@@ -39,7 +40,7 @@
         (mount/stop)
         (is (not (-> path
                      slurp
-                     edn/read-string
+                     edn/read
                      (contains? :m)))))))
 
 

@@ -7,7 +7,10 @@
 (deftest start
   (testing "Success; path from resources"
     (mount/start-with-args {:mount-configuration.resource/path aux.fix/config.rsrc})
-    (is (contains? resource-config :resource))
+    (is (true? (:is-resource resource-config)))
+    (is (contains? resource-config :m))
+    (is (contains? resource-config :file))
+    (is (contains? resource-config :uri))
     (is (contains? resource-config :time))
     (mount/stop))
 

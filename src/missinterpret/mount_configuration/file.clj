@@ -1,7 +1,8 @@
 (ns missinterpret.mount-configuration.file
   "Provides data from an edn file. "
   (:require [missinterpret.anomalies.anomaly :as anom]
-            [missinterpret.mount-configuration.edn :as edn]
+            [missinterpret.edn-io.data-readers :as data-readers] ;; Required for tag literals during write
+            [missinterpret.edn-io.edn :as edn]
             [missinterpret.mount-configuration.env :refer [env-config]]
             [clojure.java.io :as io]
             [mount.core :refer [defstate] :as mount]
@@ -31,7 +32,7 @@
 
 ;; Mount ----------------------------------------------------------
 
-(defn start [{:mount-configuration.file/keys [path throw-if-missing dont-bootstrap dont-save-on-stop]}]
+(defn start [{:mount-configuration.file/keys [path throw-if-missing dont-bootstrap dont-save-on-stop] :as args}]
   (let [anomaly {:from     ::start
                  :category :anomaly.category/fault
                  :message  {:readable (str path " missing or failed to load")
@@ -60,13 +61,10 @@
         {})
 
       :else
-      (try
-        (let [data (-> file-path io/file io/input-stream edn/read-string)]
-          (swap! edit-atom assoc :path file-path)
-          (swap! edit-atom assoc :dont-save-on-stop dont-save-on-stop)
-          data)
-
-        (catch java.lang.Exception _ (anom/throw+ anomaly))))))
+      (let [data (-> (slurp file-path) (edn/read :throw-on-error true))]
+        (swap! edit-atom assoc :path file-path)
+        (swap! edit-atom assoc :dont-save-on-stop dont-save-on-stop)
+        data))))
 
 
 (defn stop []

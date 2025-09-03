@@ -5,17 +5,14 @@
 
    Note: values from env variables are parsed as edn"
   (:require [missinterpret.anomalies.anomaly :as anom]
-            [missinterpret.mount-configuration.edn :as edn]
-            [clojure.java.io :as io]
+            [missinterpret.edn-io.edn :as edn]
             [mount.core :refer [defstate] :as mount]
             [clojure.pprint :refer [pprint]])
   (:import (clojure.lang Symbol)))
 
 ;; Mount ----------------------------------------------------------
 ;;
-
-
-(defn start [{:mount-configuration.env/keys [vars skip-missing throw-parse-failed] :as args}]
+(defn start [{:mount-configuration.env/keys [vars throw-if-missing throw-parse-failed] :as args}]
   (reduce
     (fn [coll k]
       (let [value (-> (name k) System/getenv)
@@ -24,16 +21,17 @@
                      :message  {:readable (str k " missing or failed to load")
                                 :data     {:var k
                                            :value value
-                                           :skip-missing skip-missing
+                                           :throw-if-missing throw-if-missing
                                            :throw-parse-failed throw-parse-failed}}}]
+
         (try
           (cond
-            (and (nil? value) skip-missing)       coll
-            (and (nil? value) (not skip-missing)) (anom/throw+ anomaly)
+            (and (nil? value) (true? throw-if-missing)) (anom/throw+ anomaly)
+            (nil? value)                                coll
 
             :else
             (try
-              (let [parsed (-> io/input-stream edn/read-string)
+              (let [parsed (edn/read value :throw-on-error true)
                     v (if (-> parsed type (= Symbol))
                         (str parsed)
                         parsed)]
@@ -47,6 +45,3 @@
 
 (defstate env-config
           :start (start (mount/args)))
-
-
-

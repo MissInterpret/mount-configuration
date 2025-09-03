@@ -75,7 +75,7 @@ The namespace's start function takes the following `mount/start` runtime variabl
 keys under the `:mount-configuration.env` namespace:
 
 - `vars` - A set of the names of the variables as a keyword: `#{:PATH}`
-- `skip-missing` - Skip any variables in the set which aren't available at runtime instead of throwing an exception.
+- `throw-if-missing` - Throw an exception when any variables in the set which aren't available at runtime. By default they are skipped
 - `throw-parse-failed` -Throw an exception if the edn parsing fails.
 
 ## missinterpret.mount-configuration.resource

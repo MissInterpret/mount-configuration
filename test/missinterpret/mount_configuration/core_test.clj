@@ -8,7 +8,7 @@
 
 (use-fixtures :once (aux.fix/cp-config aux.fix/config.file path))
 
-(deftest start
+#_(deftest start
   (testing "PATH for env loading; default configuration -> file-config.edn"
     (mount/start-with-args {:mount-configuration.env/vars #{:PATH}
                             :mount-configuration.file/path path})

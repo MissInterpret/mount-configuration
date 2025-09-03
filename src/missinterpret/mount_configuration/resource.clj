@@ -2,7 +2,7 @@
   "Provides data by loading resource-config.edn from the resources of the runtime context"
   (:require [missinterpret.anomalies.anomaly :as anom]
             [mount.core :refer [defstate]]
-            [missinterpret.mount-configuration.edn :as edn]
+            [missinterpret.edn-io.edn :as edn]
             [missinterpret.mount-configuration.env :refer [env-config]]
             [clojure.java.io :as io]
             [mount.core :refer [defstate] :as mount]
@@ -24,9 +24,7 @@
       (nil? rsrc)                        {}
 
       :else
-      (try
-        (-> (io/input-stream rsrc) edn/read-string)
-        (catch java.lang.Exception _ (anom/throw+ anomaly))))))
+      (edn/read rsrc :throw-on-error true))))
 
 
 (defstate resource-config
